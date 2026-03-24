@@ -1,0 +1,25 @@
+{
+  "name": "nodejs-pro",
+  "version": "1.0.0",
+  "description": "git add .\r git commit -m \"comment\"\r git push origin master",
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb"
+  ],
+  "homepage": "https://github.com/NgoQuoc4/nodejs-pro#readme",
+  "bugs": {
+    "url": "https://github.com/NgoQuoc4/nodejs-pro/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NgoQuoc4/nodejs-pro.git"
+  },
+  "license": "ISC",
+  "author": "Henry",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
