@@ -5,6 +5,16 @@
     "target": "es6",
     "sourceMap": true,
     "skipLibCheck": true,
-    "outDir": "dist"
-  }
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "config/*": ["./src/config/*"],
+      "controllers/*": ["./src/controllers/*"],
+      "models/*": ["./src/models/*"],
+      "views/*": ["./src/views/*"],
+      "routes/*": ["./src/routes/*"],
+      "services/*": ["./src/services/*"],
+    },
+  } 
 }
