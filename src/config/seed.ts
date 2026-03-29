@@ -16,6 +16,7 @@ const initDataUser = async () => {
                     phone: "09091111",
                     address: "HCM",
                     password: defaultPassword,
+                    roleId: 1
                 },  
                 {
                     username: "alex@gmail.com",
@@ -24,10 +25,12 @@ const initDataUser = async () => {
                     phone: "09090000",
                     address: "VN",
                     password: defaultPassword,
+                    roleId: 2
                 }
             ]
         })
-    } else if(countRole === 0){
+    } 
+    if(countRole === 0){
         await prisma.role.createMany({
             data: [
                 {
@@ -41,8 +44,8 @@ const initDataUser = async () => {
             ]
         })
     } 
-    else {
-        console.log("Data ")
+    if (countUser !== 0 && countRole !== 0) {
+        console.log("Data Already Initialized");
     }
 }
 export default initDataUser;

@@ -7,7 +7,7 @@ const hashPassword = async (password: string) => {
    return await bcrypt.hash(password, saltRounds);
 }
 
-const handleCreateUser = async (username: string, password: string, fullName: string, address: string, phone: string, accountType: string, avatar: string) => {
+const handleCreateUser = async (username: string, password: string, fullName: string, address: string, phone: string, accountType: string, role: string,avatar: string) => {
     const defaultPassword = await hashPassword(password);
     const createUser = await prisma.user.create({
         data:{
@@ -17,7 +17,8 @@ const handleCreateUser = async (username: string, password: string, fullName: st
             address: address, 
             phone: phone,
             accountType: ACCOUNT_TYPE.SYSTEM, 
-            avatar: avatar
+            roleId: +role,
+            avatar: avatar,
         },
     })
     return createUser;
@@ -31,7 +32,6 @@ const getAllRole = async () => {
     const roles = await prisma.role.findMany()
     return roles
 }
- 
  
 const handleDeleteUser = async (id: string) => {
     const deleteById = await prisma.user.delete({
@@ -51,17 +51,18 @@ const getUsersById = async (id: string) => {
     return userById
 }
 
-const updateUserById =  async (id: string, name: string , email: string, address : string) => {
+const updateUserById =  async (id: string, fullName: string, address: string, phone: string, role: string,avatar: string) => {
     const updateUser = await prisma.user.update({
         where: {
             id: +id,
         },
         data:{
-            fullName: name,
-            username: email,
-            address: address,
-            password: "",
-            accountType: "",
+            fullName: fullName, 
+            address: address, 
+            phone: phone,
+            roleId: +role,
+            avatar: avatar,
+            ...(avatar !== undefined && { avatar: avatar })
         }
     })
     return updateUser;

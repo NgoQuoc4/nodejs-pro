@@ -15,10 +15,10 @@ const getCreateUserPage = async (req : Request, res : Response) => {
     })
 }
 const postCreateUser = async (req : Request, res : Response) => { 
-    const {username, password, fullName, address, phone, accountType} = req.body 
+    const {username, password, fullName, address, phone, accountType, role} = req.body 
     const file  = req?.file;
     const avatar = file?.filename ?? "image-non.png";
-    await handleCreateUser(username, password, fullName, address, phone, accountType, avatar);
+    await handleCreateUser(username, password, fullName, address, phone, accountType,role, avatar );
 
     return res.redirect("/admin/user")  
 }
@@ -31,7 +31,7 @@ const postDeleteUser = async (req : Request, res : Response) => {
     }
     await handleDeleteUser(safeId);
 
-    return res.redirect("/")
+    return res.redirect("/admin/user")
 }
 const getViewUser = async (req : Request, res : Response) => {
     const { id } = req.params;
@@ -39,16 +39,17 @@ const getViewUser = async (req : Request, res : Response) => {
     if (!safeId) {
         return res.status(400).send("User ID is required");
     }
-
-   const user = await getUsersById(safeId)
-  return res.render("view-user.ejs", { id : id , user : user})
+    const roles = await getAllRole();
+    const user = await getUsersById(safeId)
+    return res.render("admin/user/detail.ejs", { id : id , user : user, roles : roles })
 }
 
 const postUpdateUser = async (req : Request, res : Response) => {
-  const { id , name, email, address} = req.body;
+    const { id , fullName, address, phone, role} = req.body;
+    const file  = req?.file;
+    const avatar = file?.filename ?? undefined;
+    await updateUserById( id , fullName, address, phone, role, avatar);
 
-  await updateUserById( id , name, email, address);
-
-  return res.redirect("/")
+  return res.redirect("/admin/user")
 }
 export {getHomePage, getCreateUserPage, postCreateUser, postDeleteUser, getViewUser, postUpdateUser }
