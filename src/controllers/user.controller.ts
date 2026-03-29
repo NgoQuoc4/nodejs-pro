@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { getAllUsers, getUsersById, handleCreateUser, handleDeleteUser, updateUserById } from "services/user.service";
+import { getAllRole, getAllUsers, getUsersById, handleCreateUser, handleDeleteUser, updateUserById } from "services/user.service";
 
 const getHomePage = async (req : Request, res : Response) =>{
     const users = await getAllUsers();
@@ -8,14 +8,19 @@ const getHomePage = async (req : Request, res : Response) =>{
   })
 }
 
-const getCreateUserPage = (req : Request, res : Response) => {
-    return res.render("create-user.ejs")
+const getCreateUserPage = async (req : Request, res : Response) => {
+    const roles = await getAllRole();
+    return res.render("admin/user/create.ejs",{
+        roles: roles
+    })
 }
 const postCreateUser = async (req : Request, res : Response) => { 
-    const { name, email, address} = req.body 
-    await handleCreateUser(name, email, address);
+    const {username, password, fullName, address, phone, accountType} = req.body 
+    const file  = req?.file;
+    const avatar = file?.filename ?? "image-non.png";
+    await handleCreateUser(username, password, fullName, address, phone, accountType, avatar);
 
-    return res.redirect("/")
+    return res.redirect("/admin/user")  
 }
  
 const postDeleteUser = async (req : Request, res : Response) => { 
@@ -46,4 +51,4 @@ const postUpdateUser = async (req : Request, res : Response) => {
 
   return res.redirect("/")
 }
-export {getHomePage, getCreateUserPage, postCreateUser, postDeleteUser, getViewUser, postUpdateUser}
+export {getHomePage, getCreateUserPage, postCreateUser, postDeleteUser, getViewUser, postUpdateUser }

@@ -1,32 +1,45 @@
 import { prisma } from "config/client";
-import getConnection from "config/database";
+import { ACCOUNT_TYPE } from "config/constant";
+// import getConnection from "config/database"; 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const hashPassword = async (password: string) => {
+   return await bcrypt.hash(password, saltRounds);
+}
 
-const handleCreateUser = async (name: string , email: string, address : string) => {
-    await prisma.user.create({
+const handleCreateUser = async (username: string, password: string, fullName: string, address: string, phone: string, accountType: string, avatar: string) => {
+    const defaultPassword = await hashPassword(password);
+    const createUser = await prisma.user.create({
         data:{
-            name: name,
-            email: email,
-            address: address
+            username: username, 
+            password: defaultPassword, 
+            fullName: fullName, 
+            address: address, 
+            phone: phone,
+            accountType: ACCOUNT_TYPE.SYSTEM, 
+            avatar: avatar
         },
     })
+    return createUser;
 }
 const getAllUsers = async () => {
     const user = await prisma.user.findMany()
     return user
 }
+
+const getAllRole = async () => {
+    const roles = await prisma.role.findMany()
+    return roles
+}
+ 
  
 const handleDeleteUser = async (id: string) => {
-    try{
-        const connection = await getConnection();
-        const sql = 'DELETE FROM `user` WHERE `id` = ?';
-        const values = [id]
-        const [result, fields] = await connection.execute(sql, values);
-        
-        return result
-    } catch(err){
-        console.log(err)
-        return []
-    }
+    const deleteById = await prisma.user.delete({
+        where: {
+            id: +id
+        }
+    })
+    return deleteById
 }
 
 const getUsersById = async (id: string) => {
@@ -44,12 +57,14 @@ const updateUserById =  async (id: string, name: string , email: string, address
             id: +id,
         },
         data:{
-            name: name,
-            email: email,
-            address: address
+            fullName: name,
+            username: email,
+            address: address,
+            password: "",
+            accountType: "",
         }
     })
     return updateUser;
 }
 
-export { handleCreateUser, getAllUsers, handleDeleteUser, getUsersById, updateUserById }
+export { handleCreateUser, getAllUsers, handleDeleteUser, getUsersById, updateUserById , getAllRole, hashPassword}
