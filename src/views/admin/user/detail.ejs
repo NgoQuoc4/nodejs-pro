@@ -104,6 +104,8 @@
                       </div>
                     </div>
 
+                    
+
                     <div class="mb-3">
                       <label for="formFile" class="form-label">Avatar</label>
                       <input class="form-control" type="file" id="avatarFile" name="avatar" accept=".png, .jpg, .jpeg" >
@@ -111,7 +113,7 @@
                    
                     <% if (user.avatar) { %>
                      <img style="max-height: 250px; display: block;" alt="avatar preview" id="avatarPreview" 
-                    src="/images/<%=user.avatar %>"/>
+                    src="/images/user/<%=user.avatar %>"/>
                     <% } else { %>
                      <img style="max-height: 250px; display: none;" alt="avatar preview" id="avatarPreview" 
                     />

@@ -7,6 +7,16 @@ const hashPassword = async (password: string) => {
    return await bcrypt.hash(password, saltRounds);
 }
 
+const getAllUsers = async () => {
+    const user = await prisma.user.findMany()
+    return user
+}
+
+const getAllRole = async () => {
+    const roles = await prisma.role.findMany()
+    return roles
+}
+
 const handleCreateUser = async (username: string, password: string, fullName: string, address: string, phone: string, accountType: string, role: string,avatar: string) => {
     const defaultPassword = await hashPassword(password);
     const createUser = await prisma.user.create({
@@ -23,15 +33,7 @@ const handleCreateUser = async (username: string, password: string, fullName: st
     })
     return createUser;
 }
-const getAllUsers = async () => {
-    const user = await prisma.user.findMany()
-    return user
-}
 
-const getAllRole = async () => {
-    const roles = await prisma.role.findMany()
-    return roles
-}
  
 const handleDeleteUser = async (id: string) => {
     const deleteById = await prisma.user.delete({

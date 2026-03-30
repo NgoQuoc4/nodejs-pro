@@ -30,13 +30,63 @@
             <h1 class="mt-4">Product</h1>
             <ol class="breadcrumb mb-4">
               <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-              <li class="breadcrumb-item active">Product</li>
+              <li class="breadcrumb-item active">Products</li>
             </ol>
-            <div>table user</div>
+            <div style="display: flex; justify-content: space-between; align-items:  center; margin-top: 25px;">
+              <h1>List products:</h1>
+              <!-- <img src="/images/image-banner.jpg" alt="image-banner"> -->
+              <div>
+                  <a class="btn btn-primary" href="/admin/create-product">Create product </a>
+              </div>
+            </div>
+            <hr>
+            <table class="table table-hover table-bordered">
+                      <thead>
+                          <th>Id</th>
+                          <th>Name product</th>
+                          <th>Price</th>
+                          <th>Image</th>
+                          <th>Description</th>
+                          <th>Short Description</th>
+                          <th>Quantity</th>
+                          <th>Sold</th>
+                          <th>Factory</th>
+                          <th>Target</th>
+                          <th>Action</th>
+                      </thead>
+                      <tbody>
+                          <% products.forEach( function(product) { %>
+                              <tr>
+                                  <td><%= product.id %></td>
+                                  <td><%= product.name %></td>
+                                  <td><%= product.price %></td>
+                                  <td>
+                                    <img src="/images/product/<%= product.image %>" alt="image-not-found" style="width: 100px; height: 100px; object-fit: cover;">
+                                  </td>
+                                  <td><%= product.detailDesc %></td>
+                                  <td><%= product.shortDesc %></td>
+                                  <td><%= product.quantity %></td>
+                                  <td><%= product.sold %></td>
+                                  <td><%= product.factory %></td>
+                                  <td><%= product.target %></td>
+
+                                  <td>
+                                      <div style="display: flex; gap: 10px;">
+                                          <form action="/admin/handle-view-product/<%= product.id %>" method="get">
+                                              <button type="submit" class="btn btn-warning">View <%= product.id %></button>
+                                          </form>
+                                          <form action="/admin/handle-delete-product/<%= product.id %>" method="post">
+                                              <button type="submit" class="btn btn-danger">Delete <%= product.id %></button>
+                                          </form>
+                                      </div>
+                                  </td>
+                              </tr> 
+                          <% }) %>
+                      </tbody>
+            </table>
           </div>
         </main>
         <%- include('../layout/footer.ejs') -%>
-      </div>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

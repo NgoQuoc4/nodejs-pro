@@ -31,48 +31,45 @@
               <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
               <li class="breadcrumb-item active">Users</li>
             </ol>
-            <div>
-                <div style="display: flex; justify-content: space-between; align-items:  center; margin-top: 25px;">
-            <h1>List users:</h1>
-            <!-- <img src="/images/image-banner.jpg" alt="image-banner"> -->
-            <div>
-                <a class="btn btn-primary" href="/admin/create-user">Create user </a>
+            <div style="display: flex; justify-content: space-between; align-items:  center; margin-top: 25px;">
+              <h1>List users:</h1>
+              <!-- <img src="/images/image-banner.jpg" alt="image-banner"> -->
+              <div>
+                  <a class="btn btn-primary" href="/admin/create-user">Create user </a>
+              </div>
             </div>
-        </div>
-        <hr>
-                <table class="table table-hover table-bordered">
-                    <thead>
-                        <th>Id</th>
-                        <th>Full Name</th>
-                        <th>User Name</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Action</th>
-                    </thead>
-                    <tbody>
-                        <% users.forEach( function(user) { %>
-                            <tr>
-                                <td><%= user.id %></td>
-                                <td><%= user.fullName %></td>
-                                <td><%= user.username %></td>
-                                <td><%= user.phone %></td>
-                                <td><%= user.address %></td>
-                                <td>
-                                    <div style="display: flex; gap: 10px;">
-                                        <form action="/admin/handle-view-user/<%= user.id %>" method="get">
-                                            <button type="submit" class="btn btn-warning">View <%= user.id %></button>
-                                        </form>
-                                        <form action="/admin/handle-delete-user/<%= user.id %>" method="post">
-                                            <button type="submit" class="btn btn-danger">Delete <%= user.id %></button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr> 
-                        <% }) %>
-                    </tbody>
-                </table>
-            </div>
-
+            <hr>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <th>Id</th>
+                    <th>Full Name</th>
+                    <th>User Name</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    <% users.forEach( function(user) { %>
+                        <tr>
+                            <td><%= user.id %></td>
+                            <td><%= user.fullName %></td>
+                            <td><%= user.username %></td>
+                            <td><%= user.phone %></td>
+                            <td><%= user.address %></td>
+                            <td>
+                                <div style="display: flex; gap: 10px;">
+                                    <form action="/admin/handle-view-user/<%= user.id %>" method="get">
+                                        <button type="submit" class="btn btn-warning">View <%= user.id %></button>
+                                    </form>
+                                    <form action="/admin/handle-delete-user/<%= user.id %>" method="post">
+                                        <button type="submit" class="btn btn-danger">Delete <%= user.id %></button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr> 
+                    <% }) %>
+                </tbody>
+            </table>
           </div>
         </main>
         <%- include('../layout/footer.ejs') -%>

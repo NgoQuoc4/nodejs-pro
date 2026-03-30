@@ -2,10 +2,7 @@ import { Request, Response } from "express"
 import { getAllRole, getAllUsers, getUsersById, handleCreateUser, handleDeleteUser, updateUserById } from "services/user.service";
 
 const getHomePage = async (req : Request, res : Response) =>{
-    const users = await getAllUsers();
-  return res.render("home", {
-    users : users
-  })
+    return res.render("client/home/show.ejs")
 }
 
 const getCreateUserPage = async (req : Request, res : Response) => {
@@ -14,10 +11,11 @@ const getCreateUserPage = async (req : Request, res : Response) => {
         roles: roles
     })
 }
+
 const postCreateUser = async (req : Request, res : Response) => { 
     const {username, password, fullName, address, phone, accountType, role} = req.body 
     const file  = req?.file;
-    const avatar = file?.filename ?? "image-non.png";
+    const avatar = file?.filename ?? "image-not-found.png";
     await handleCreateUser(username, password, fullName, address, phone, accountType,role, avatar );
 
     return res.redirect("/admin/user")  
