@@ -6,7 +6,7 @@ const handleGetAllProducts = async () => {
     return products
 }
 
-const handleCreateProduct = async (name: string, price: number, image: string, detailDesc: string, shortDesc: string, quantity: number, sold: string, factory: string , target: string) => {
+const handleCreateProduct = async (name: string, price: number, image: string, detailDesc: string, shortDesc: string, quantity: number, factory: string , target: string) => {
     const createdProduct = await prisma.product.create({
         data: {
             name: name,
@@ -15,7 +15,6 @@ const handleCreateProduct = async (name: string, price: number, image: string, d
             detailDesc: detailDesc,
             shortDesc: shortDesc,
             quantity: +quantity,
-            sold: sold,
             factory: factory,
             target: target
         },
@@ -41,7 +40,7 @@ const handleDeleteProduct = async (id: string) => {
     return deletedProduct
 }
 
-const handleUpdateProduct = async (id: string, name: string, price: number, image: string, detailDesc: string, shortDesc: string, quantity: number, sold: string, factory: string , target: string) => {
+const handleUpdateProduct = async (id: string, name: string, price: number, image: string, detailDesc: string, shortDesc: string, quantity: number , factory: string , target: string) => {
     const updateProduct = await prisma.product.update({
         where: {
             id: +id
@@ -52,7 +51,6 @@ const handleUpdateProduct = async (id: string, name: string, price: number, imag
             detailDesc: detailDesc,
             shortDesc: shortDesc,
             quantity: +quantity,
-            sold: sold,
             factory: factory,
             target: target,
             ...(image !== undefined && { image: image })

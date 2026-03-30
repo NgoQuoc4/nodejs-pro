@@ -3,32 +3,20 @@ export const ACCOUNT_TYPE = {
     GOOGLE : "GOOGLE",
     GITHUB : "GITHUB"
 }
-export const SOLD = {
-    SOLD_OUT : "SOLD_OUT",
-    AVAILABLE : "AVAILABLE"
-}
-export const COMPUTER_BRANDS = {
-  APPLE: "APPLE",
-  DELL: "DELL",
-  HP: "HP",
-  LENOVO: "LENOVO",
-  ASUS: "ASUS",
-  ACER: "ACER",
-  MSI: "MSI",
-  SAMSUNG: "SAMSUNG",
-  MICROSOFT: "MICROSOFT",
-  RAZER: "RAZER",
-  LG: "LG",
-  HUAWEI: "HUAWEI"
-};
-export const LAPTOP_TYPES = {
-  GAMING: "GAMING",
-  OFFICE: "OFFICE",
-  ULTRABOOK: "ULTRABOOK",
-  WORKSTATION: "WORKSTATION",
-  STUDENT: "STUDENT",
-  BUSINESS: "BUSINESS",
-  TWO_IN_ONE: "TWO_IN_ONE",
-  TOUCHSCREEN: "TOUCHSCREEN",
-  CREATOR: "CREATOR"
-};
+
+export const COMPUTER_BRANDS = [
+    { name: "Apple (MacBook)", value: "APPLE" },
+    { name: "Asus", value: "ASUS" },
+    { name: "Lenovo", value: "LENOVO" },
+    { name: "Dell", value: "DELL" },
+    { name: "LG", value: "LG" },
+    { name: "Acer", value: "ACER" },
+];
+
+export const LAPTOP_TYPES = [
+    { name: "Gaming", value: "GAMING" },
+    { name: "Sinh viên - Văn phòng", value: "SINHVIEN-VANPHONG" },
+    { name: "Thiết kế đồ họa", value: "THIET-KE-DO-HOA" },
+    { name: "Mỏng nhẹ", value: "MONG-NHE" },
+    { name: "Doanh nhân", value: "DOANH-NHAN" },
+];

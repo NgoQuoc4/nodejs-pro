@@ -86,23 +86,11 @@
                     </div>
                     <div class="row">
                       <div class="col-6 mb-3">
-                        <label class="form-label">Sold</label>
-                        <select name="sold" class="form-select">
-                        <% Object.keys(SOLD).forEach((key) => { %>
-                          <option value="<%-SOLD[key] %>">
-                            <%= SOLD[key] %>
-                          </option>
-                          <% }) %>
-                        </select> 
-                      </div>
-                    </div>
-                      <div class="row">
-                      <div class="col-6 mb-3">
                         <label class="form-label">Factory</label>
                         <select name="factory" class="form-select">
                         <% Object.keys(COMPUTER_BRANDS).forEach((key) => { %>
-                          <option value="<%-COMPUTER_BRANDS[key] %>">
-                            <%= COMPUTER_BRANDS[key] %>
+                          <option value="<%-COMPUTER_BRANDS[key].value %> " <%= (product.factory === COMPUTER_BRANDS[key].value) ? 'selected' : '' %>>
+                            <%= COMPUTER_BRANDS[key].name %>
                           </option>
                           <% }) %>
                         </select>
@@ -115,8 +103,8 @@
                       >
                        <select name="target" class="form-select">
                         <% Object.keys(LAPTOP_TYPES).forEach((key) => { %>
-                          <option value="<%-LAPTOP_TYPES[key] %>">
-                            <%= LAPTOP_TYPES[key] %>
+                          <option value="<%-LAPTOP_TYPES[key].value %>" <%= (product.target === LAPTOP_TYPES[key].value) ? 'selected' : '' %>>
+                            <%= LAPTOP_TYPES[key].name %>
                           </option>
                           <% }) %>
                         </select>

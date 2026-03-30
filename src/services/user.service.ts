@@ -17,7 +17,7 @@ const getAllRole = async () => {
     return roles
 }
 
-const handleCreateUser = async (username: string, password: string, fullName: string, address: string, phone: string, accountType: string, role: string,avatar: string) => {
+const handleCreateUser = async (username: string, password: string, fullName: string, address: string, phone: string, accountType: string, role: string, avatar: string) => {
     const defaultPassword = await hashPassword(password);
     const createUser = await prisma.user.create({
         data:{

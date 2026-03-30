@@ -47,6 +47,11 @@
             </ol>
             <div class="row">
               <div class="col-6 mx-auto">
+                <% errors.forEach((error) => { %>
+                  <div class="alert alert-danger mb-3">
+                    <%= error %>
+                  </div>
+                <% }) %>
                 <div>
                   <form action="/admin/handle-create-product" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
@@ -58,6 +63,7 @@
                         class="form-control"
                         placeholder="Name Product"
                         name="name"
+                        value="<%= oldData.name %>"
                       />
                     </div>
                     <div class="mb-3">
@@ -68,6 +74,7 @@
                         type="number"
                         class="form-control"
                         name="price"
+                        value="<%= oldData.price %>"
                       />
                     </div>
                     <div class="mb-3">
@@ -78,27 +85,17 @@
                         type="number"
                         class="form-control"
                         name="quantity"
+                        value="<%= oldData.quantity %>"
+
                       />
                     </div>
                     <div class="row">
                       <div class="col-6 mb-3">
-                        <label class="form-label">Sold</label>
-                        <select name="sold" class="form-select">
-                        <% Object.keys(SOLD).forEach((key) => { %>
-                          <option>
-                            <%= SOLD[key] %>
-                          </option>
-                          <% }) %>
-                        </select> 
-                      </div>
-                    </div>
-                      <div class="row">
-                      <div class="col-6 mb-3">
                         <label class="form-label">Factory</label>
                         <select name="factory" class="form-select">
                         <% Object.keys(COMPUTER_BRANDS).forEach((key) => { %>
-                          <option>
-                            <%= COMPUTER_BRANDS[key] %>
+                          <option value="<%-COMPUTER_BRANDS[key].value %>" <%= (oldData.factory === COMPUTER_BRANDS[key].value) ? 'selected' : '' %>>
+                            <%= COMPUTER_BRANDS[key].name %>
                           </option>
                           <% }) %>
                         </select>
@@ -109,8 +106,8 @@
                       >
                        <select name="target" class="form-select">
                         <% Object.keys(LAPTOP_TYPES).forEach((key) => { %>
-                          <option value="<%-LAPTOP_TYPES[key] %>">
-                            <%= LAPTOP_TYPES[key] %>
+                          <option value="<%-LAPTOP_TYPES[key].value %>" <%= (oldData.target === LAPTOP_TYPES[key].value) ? 'selected' : '' %>>
+                            <%= LAPTOP_TYPES[key].name %>
                           </option>
                           <% }) %>
                         </select>
@@ -135,7 +132,7 @@
                         id="exampleFormControlTextarea1"
                         rows="3"
                         name="detailDesc"
-                      ></textarea>
+                      ><%= oldData.detailDesc %></textarea>
                     </div>
                     <div class="mb-3">
                       <label
@@ -148,7 +145,7 @@
                         id="exampleFormControlTextarea1"
                         rows="3"
                         name="shortDesc"
-                      ></textarea>
+                      ><%= oldData.shortDesc %></textarea>
                     </div>
                     
                     <div class="mb-3">

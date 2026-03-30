@@ -1,7 +1,7 @@
 import { getAdminOrderPage, getAdminProductPage, getAdminUserPage, getDashboardPage } from 'controllers/admin/dashboard.controller';
 import { getCreateProductPage, getViewProduct, postCreateProduct, postUpdateProduct, postDeleteProduct } from 'controllers/admin/product.controller';
-import { getProductPage, getAllProductPage } from 'controllers/client/product.controller';
-import { getCreateUserPage, getHomePage, getViewUser, postUpdateUser , postCreateUser, postDeleteUser } from 'controllers/user.controller';
+import { getProductPage, getAllProductPage, getHomePage } from 'controllers/client/product.controller';
+import { getCreateUserPage, getViewUser, postUpdateUser , postCreateUser, postDeleteUser } from 'controllers/user.controller';
 import express, {Express} from 'express'
 import fileUploadMiddleware from 'src/middlerware/multer';
 
