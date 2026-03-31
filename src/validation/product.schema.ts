@@ -1,3 +1,6 @@
+import { prisma } from "config/client";
+import exp from "constants";
+import e from "express";
 import { z } from "zod";
 
 export const ProductSchema = z.object({

@@ -1,5 +1,6 @@
 import { getAdminOrderPage, getAdminProductPage, getAdminUserPage, getDashboardPage } from 'controllers/admin/dashboard.controller';
 import { getCreateProductPage, getViewProduct, postCreateProduct, postUpdateProduct, postDeleteProduct } from 'controllers/admin/product.controller';
+import { getLoginPage, getRegisterPage, getRegister } from 'controllers/client/auth.controller';
 import { getProductPage, getAllProductPage, getHomePage } from 'controllers/client/product.controller';
 import { getCreateUserPage, getViewUser, postUpdateUser , postCreateUser, postDeleteUser } from 'controllers/user.controller';
 import express, {Express} from 'express'
@@ -14,8 +15,13 @@ const webRoutes = (app : Express) => {
     router.get("/products" , getAllProductPage )
     router.get("/product/:id" , getProductPage)
 
+    // login, register route
+    router.get("/login", getLoginPage)
+    router.get("/register", getRegisterPage)
+    router.post("/register", getRegister)
 
     // router.get("/create-user", getCreateUserPage)
+
     // admin route
     //user
     router.get("/admin", getDashboardPage)
