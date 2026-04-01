@@ -3,8 +3,12 @@ import { ACCOUNT_TYPE } from "config/constant";
 // import getConnection from "config/database"; 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+
 const hashPassword = async (password: string) => {
    return await bcrypt.hash(password, saltRounds);
+}
+const comparePassword = async (password: string, hashedPassword: string) => {
+    return await bcrypt.compare(password, hashedPassword);
 }
 
 const getAllUsers = async () => {
@@ -70,4 +74,4 @@ const updateUserById =  async (id: string, fullName: string, address: string, ph
     return updateUser;
 }
 
-export { handleCreateUser, getAllUsers, handleDeleteUser, getUsersById, updateUserById , getAllRole, hashPassword}
+export { handleCreateUser, getAllUsers, handleDeleteUser, getUsersById, updateUserById , getAllRole, comparePassword , hashPassword}

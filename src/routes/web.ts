@@ -4,6 +4,7 @@ import { getLoginPage, getRegisterPage, getRegister } from 'controllers/client/a
 import { getProductPage, getAllProductPage, getHomePage } from 'controllers/client/product.controller';
 import { getCreateUserPage, getViewUser, postUpdateUser , postCreateUser, postDeleteUser } from 'controllers/user.controller';
 import express, {Express} from 'express'
+import passport from 'passport';
 import fileUploadMiddleware from 'src/middlerware/multer';
 
 
@@ -17,6 +18,11 @@ const webRoutes = (app : Express) => {
 
     // login, register route
     router.get("/login", getLoginPage)
+    router.post("/login", passport.authenticate("local", {
+        successRedirect: "/",
+        failureRedirect: "/login",
+        failureMessage: true
+    }))
     router.get("/register", getRegisterPage)
     router.post("/register", getRegister)
 
