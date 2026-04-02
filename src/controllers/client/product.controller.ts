@@ -3,6 +3,8 @@ import { handleAllProducts, handleGetProductByID } from "services/client/item.se
 
 const getHomePage = async (req: Request, res: Response) => {
     const products = await handleAllProducts()
+    const user = req.user as any;
+    console.log("user: ", user);
     return res.render("client/home/show.ejs",{
         products: products
     })
