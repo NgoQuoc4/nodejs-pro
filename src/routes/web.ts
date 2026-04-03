@@ -1,13 +1,12 @@
 import { getAdminOrderPage, getAdminProductPage, getAdminUserPage, getDashboardPage } from 'controllers/admin/dashboard.controller';
 import { getCreateProductPage, getViewProduct, postCreateProduct, postUpdateProduct, postDeleteProduct } from 'controllers/admin/product.controller';
 import { getLoginPage, getRegisterPage, getRegister, getSuccessRedirectPage, postLogout } from 'controllers/client/auth.controller';
-import { getProductPage, getAllProductPage, getHomePage } from 'controllers/client/product.controller';
+import { getProductPage, getAllProductPage, getHomePage, getCartPage, postAddToCartProduct, postDeleteProductInCart } from 'controllers/client/product.controller';
 import { getCreateUserPage, getViewUser, postUpdateUser , postCreateUser, postDeleteUser } from 'controllers/user.controller';
 import express, {Express} from 'express'
 import passport from 'passport';
-import { isAdmin, isLogin } from 'src/middlerware/auth';
-import fileUploadMiddleware from 'src/middlerware/multer';
-
+import { isAdmin } from '../middlerware/auth';
+import fileUploadMiddleware from '../middlerware/multer';
 
 const router = express.Router(); 
 
@@ -54,8 +53,16 @@ const webRoutes = (app : Express) => {
     //order
     router.get("/admin/order", getAdminOrderPage)
 
-    app.use("/",isAdmin, router)
+    //cart
+    router.post("/add-to-cart-product/:id", postAddToCartProduct )
+    router.get("/cart", getCartPage)
+    router.post("/delete-product-in-cart/:id", postDeleteProductInCart )
 
+
+    
+
+    app.use("/",isAdmin, router)
+ 
 }
  
 export default webRoutes

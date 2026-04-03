@@ -1,14 +1,15 @@
 import { COMPUTER_BRANDS, LAPTOP_TYPES } from "config/constant";
 import { Request, Response } from "express"
+import { getProductInCart, handleAddProductToCart } from "services/client/item.service";
 import { handleCreateProduct, handleDeleteProduct, handleGetProductByID, handleUpdateProduct } from "services/product.service";
-import { ProductSchema, TProductSchema } from "src/validation/product.schema";
+import { ProductSchema, TProductSchema } from "../../validation/product.schema";
 const SOLD = {
     "SOLD_OUT": "SOLD_OUT",
     "AVAILABLE": "AVAILABLE"
 }
 
 const getCreateProductPage = async (req: Request, res: Response) => {
-    const errors= []
+    const errors:any = []
     const oldData = {}
     return res.render("admin/product/create.ejs", {
         SOLD: SOLD,
@@ -66,9 +67,11 @@ const postDeleteProduct = async (req: Request, res: Response) => {
 const postUpdateProduct = async (req: Request, res: Response) => {
     const {id, name, price, detailDesc, shortDesc, quantity, factory, target} = req.body;
     const file  = req?.file;
-    const image  = file?.filename ?? undefined;
+    const image  = file?.filename ?? "";
     await handleUpdateProduct(id, name, price, image, detailDesc, shortDesc, quantity, factory, target)
     return res.redirect('/admin/product')
 }
 
-export { postCreateProduct, getViewProduct, postDeleteProduct ,postUpdateProduct ,getCreateProductPage }
+
+
+export { postCreateProduct, getViewProduct, postDeleteProduct ,postUpdateProduct ,getCreateProductPage}

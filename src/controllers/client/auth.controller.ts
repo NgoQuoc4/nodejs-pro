@@ -1,7 +1,6 @@
 import { Request, Response } from "express"
-import { get } from "http"
 import { userRoles, registerNewUser } from "services/client/auth.service"
-import { RegisterSchema, TRegisterSchema } from "src/validation/auth.schema"
+import { RegisterSchema, TRegisterSchema } from "../../validation/auth.schema";
 
 const getLoginPage = async (req: Request, res: Response) => {
     const { session } = req as any;

@@ -4,10 +4,10 @@ import "dotenv/config"
 import webRoutes from "./routes/web"
 import initDataUser from "config/seed"
 import passport from "passport"
-import configPassportLocal from "src/middlerware/passport.local"
 import session from "express-session"
 import { PrismaSessionStore } from "@quixo3/prisma-session-store"
 import { PrismaClient } from "@prisma/client"
+import configPassportLocal from "./middlerware/passport.local"
 
 const app = express()
 const PORT = process.env.PORT || 8080
@@ -53,6 +53,7 @@ app.use((req, res, next) => {
     res.locals.user = req.user || null; // if req.user is undefined, set it to null
     next();
 });
+
 
 webRoutes(app);
 
