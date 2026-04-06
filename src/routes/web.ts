@@ -1,12 +1,13 @@
-import { getAdminOrderPage, getAdminProductPage, getAdminUserPage, getDashboardPage } from 'controllers/admin/dashboard.controller';
+import { getAdminOrderPage, getAdminProductPage, getAdminUserPage, getDashboardPage, getViewOrderDetail } from 'controllers/admin/dashboard.controller';
 import { getCreateProductPage, getViewProduct, postCreateProduct, postUpdateProduct, postDeleteProduct } from 'controllers/admin/product.controller';
-import { getLoginPage, getRegisterPage, getRegister, getSuccessRedirectPage, postLogout } from 'controllers/client/auth.controller';
-import { getProductPage, getAllProductPage, getHomePage, getCartPage, postAddToCartProduct, postDeleteProductInCart } from 'controllers/client/product.controller';
+import { getLoginPage, getRegisterPage, getRegister, getSuccessRedirectPage, postLogout, getHistoryPage } from 'controllers/client/auth.controller';
+import { getProductPage, getAllProductPage, getHomePage, getCartPage, postAddToCartProduct, postDeleteProductInCart, getCheckOut, updateCheckOut, postPlaceOrder, getThankPage } from 'controllers/client/product.controller';
 import { getCreateUserPage, getViewUser, postUpdateUser , postCreateUser, postDeleteUser } from 'controllers/user.controller';
 import express, {Express} from 'express'
 import passport from 'passport';
 import { isAdmin } from '../middlerware/auth';
 import fileUploadMiddleware from '../middlerware/multer';
+import { get } from 'http';
 
 const router = express.Router(); 
 
@@ -28,7 +29,8 @@ const webRoutes = (app : Express) => {
     router.post("/register", getRegister)
 
     router.post("/logout", postLogout )
-    // router.get("/create-user", getCreateUserPage)
+
+    router.get("/order-history", getHistoryPage)
 
     // admin route
     //user
@@ -52,14 +54,19 @@ const webRoutes = (app : Express) => {
     
     //order
     router.get("/admin/order", getAdminOrderPage)
+    router.get("/admin/handle-view-order/:id", getViewOrderDetail)
 
     //cart
     router.post("/add-to-cart-product/:id", postAddToCartProduct )
     router.get("/cart", getCartPage)
     router.post("/delete-product-in-cart/:id", postDeleteProductInCart )
+    router.get("/check-out", getCheckOut)
+    router.post("/update-quantity", updateCheckOut )
+
+    router.post("/place-order", postPlaceOrder)
+    router.get("/thank-page", getThankPage)
 
 
-    
 
     app.use("/",isAdmin, router)
  

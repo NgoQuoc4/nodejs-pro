@@ -146,7 +146,8 @@
     //     }
     //     button.parent().parent().find('input').val(newVal);
     // });
-    $('.quantity button').on('click', function () {
+    $('.quantity button').on('click', function (e) {
+        e.preventDefault();
         let change = 0;
 
         var button = $(this);

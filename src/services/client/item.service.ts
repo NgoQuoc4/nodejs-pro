@@ -139,4 +139,79 @@ const postDeleteDetailInCart = async (id : number, userId : number, sumCart: num
     }
 }
 
-export { handleAllProducts, handleGetProductByID, handleAddProductToCart, getProductInCart , postDeleteDetailInCart}
+const postUpdateQuantity = async (userId: number, quantities: string | string[], productIds: string | string[]) => {
+    const cart = await prisma.cart.findUnique({
+        where: {
+            userId: +userId,
+        },
+    })
+    if (!cart) {
+        throw new Error("Cart not found");
+    }
+
+    const arrProductIds = Array.isArray(productIds) ? productIds : [productIds];
+    const arrQuantities = Array.isArray(quantities) ? quantities : [quantities];
+
+    const updatePromises = arrProductIds.map((productId, i) => {
+        return prisma.cartDetail.updateMany({
+            where: {
+                cartId: cart.id,
+                productId: +productId
+            },
+            data: {
+                quantity: +arrQuantities[i]
+            }
+        });
+    });
+
+    // Thực thi tất cả cùng 1 lúc!
+    await prisma.$transaction(updatePromises);
+
+}
+
+const handlePlaceOrder = async (userId: number,receiverName: string, receiverAddress: string , receiverPhone : string, totalCart: number) => {
+    const cart = await prisma.cart.findUnique({
+        where: {
+            userId: +userId,
+        },
+        include: {
+            cartDetails: true
+        }
+    })
+    console.log(cart)
+    const dataOrderCartDetail = cart?.cartDetails.map((item) => {
+        return {
+            price: item.price,
+            quantity: item.quantity,
+            productId: item.productId
+        }
+    }) ?? []
+
+    if(cart){
+        await prisma.order.create({
+            data: {
+                receiverName: receiverName,
+                receiverAddress: receiverAddress,
+                receiverPhone: receiverPhone,
+                paymentMethod:"COD",
+                paymentStatus:"PAYMENT_UNPAID",
+                totalPrice: totalCart,
+                userId: +userId,
+                orderDetails: {
+                    create: dataOrderCartDetail
+                }
+            },
+        })
+        await prisma.cartDetail.deleteMany({
+            where: {
+                cartId: cart.id
+            }
+        })
+        await prisma.cart.delete({
+            where: {
+                id: cart.id
+            }
+        })
+    }
+}
+export { handleAllProducts, handleGetProductByID, handleAddProductToCart, getProductInCart , postDeleteDetailInCart, postUpdateQuantity, handlePlaceOrder}

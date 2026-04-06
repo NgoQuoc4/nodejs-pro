@@ -31,41 +31,25 @@
               <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
               <li class="breadcrumb-item active">Order</li>
             </ol>
+            <div>Order Id: <%= id %></div>
             <table class="table table-hover table-bordered">
                       <thead>
                           <th>Id</th>
-                          <th>User Name</th>
-                          <th>receiverAddress</th>
-                          <th>receiverName</th>
-                          <th>receiverPhone</th>
-                          <th>total Price</th>
-                          <th>paymentMethod</th>
-                          <th>paymentRef</th>
-                          <th>paymentStatus</th>
-                          <th>status</th>
-                          <th>Action</th>
+                          <th>image</th>
+                          <th>productName</th>
+                          <th>quantity</th>
+                          <th>price</th>
                       </thead>
                       <tbody>
-                          <% orders.forEach( function(order) { %>
+                          <% orderDetail.forEach( function(order) { %>
                               <tr>
-                                  <td><%= order.id %></td>
-                                  <td><%= order.user.fullName %></td>
-                                  <td><%= order.receiverAddress %></td>
-                                  <td><%= order.receiverName %></td>
-                                  <td><%= order.receiverPhone %></td>
-                                  <td><%= order.totalPrice %></td>
-                                  <td><%= order.paymentMethod %></td>
-                                  <td><%= order.paymentRef %></td>
-                                  <td><%= order.paymentStatus %></td>
-                                  <td><%= order.status %></td>
-
-                                  <td>
-                                      <div style="display: flex; gap: 10px;">
-                                          <form action="/admin/handle-view-order/<%= order.id %>" method="get">
-                                              <button type="submit" class="btn btn-warning">View <%= order.id %></button>
-                                          </form>
-                                      </div>
-                                  </td>
+                                <td><%= order.id %></td>
+                                <td>
+                                    <img src="/images/product/<%= order.product.image %>" alt="image-not-found" style="width: 100px; height: 100px; object-fit: cover;">
+                                </td>
+                                <td><%= order.product.name %></td>
+                                <td><%= order.quantity %></td>
+                                <td><%= order.price %></td>
                               </tr> 
                           <% }) %>
                       </tbody>

@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { userRoles, registerNewUser } from "services/client/auth.service"
+import { userRoles, registerNewUser, handleGetOrderHistory } from "services/client/auth.service"
 import { RegisterSchema, TRegisterSchema } from "../../validation/auth.schema";
 
 const getLoginPage = async (req: Request, res: Response) => {
@@ -57,4 +57,17 @@ const postLogout = (req: Request, res: Response, next: Function) => {
         return res.redirect("/login");
     } );
 }
-export { getLoginPage, getRegisterPage, getRegister, getSuccessRedirectPage, postLogout }
+
+const getHistoryPage = async (req: Request, res: Response) => {
+    const user = req.user;
+    if(!user) {
+        return res.redirect("/login")
+    }   
+    const history = await handleGetOrderHistory(user.id)
+    console.log( "history",history)
+    console.log(history.map((item) => item.orderDetails ))
+    return res.render("client/cart/history.ejs",{
+        history: history
+    })
+}
+export { getLoginPage, getRegisterPage, getRegister, getSuccessRedirectPage, postLogout , getHistoryPage}

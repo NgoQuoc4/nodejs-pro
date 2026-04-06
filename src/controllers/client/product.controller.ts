@@ -1,10 +1,9 @@
 import { Request, Response } from "express"
-import { getProductInCart, handleAddProductToCart, handleAllProducts, handleGetProductByID, postDeleteDetailInCart } from "services/client/item.service"
+import { getProductInCart, handleAddProductToCart, handleAllProducts, handleGetProductByID, handlePlaceOrder, postDeleteDetailInCart, postUpdateQuantity } from "services/client/item.service"
 
 const getHomePage = async (req: Request, res: Response) => {
     const products = await handleAllProducts()
     const user = req.user as any;
-    console.log("user: ", user);
     return res.render("client/home/show.ejs",{
         products: products
     })
@@ -55,6 +54,50 @@ const postDeleteProductInCart = async (req: Request, res: Response) =>{
     await postDeleteDetailInCart(+id, +user.id, user.sumCart)
     return res.redirect("/cart")
 }
-postDeleteProductInCart
 
-export { getProductPage, getAllProductPage, getHomePage, getCartPage, postAddToCartProduct, postDeleteProductInCart }
+
+const updateCheckOut = async (req: Request, res: Response) => {
+    const user = req.user; 
+    if(!user) {
+        return res.redirect("/login")
+    }
+    const body = req.body;
+    await postUpdateQuantity(+user.id, body.quantities, body.productIds)
+
+    return res.redirect("/check-out")
+}
+
+const getCheckOut = async (req: Request, res: Response) => {
+    const user = req.user; 
+    if(!user) {
+        return res.redirect("/login")
+    }
+    const cartDetail = await getProductInCart(+user.id)
+    const totalCart = await cartDetail?.map((item) =>  +item.quantity * +item.price)?.reduce((a , b) => a + b , 0)
+    
+    return res.render("client/cart/checkout.ejs",{
+        cartDetail : cartDetail,
+        totalCart
+    })
+}
+
+const getThankPage = async (req: Request, res: Response) => {
+    const user = req.user; 
+    if(!user) {
+        return res.redirect("/login")
+    }
+    return res.render("client/cart/thank.ejs")
+}
+
+const postPlaceOrder = async (req: Request, res: Response) => {
+    const user = req.user; 
+    if(!user) {
+        return res.redirect("/login")
+    }
+    const { receiverName , receiverAddress , receiverPhone , totalCart } = req.body
+    await handlePlaceOrder(user.id, receiverName , receiverAddress , receiverPhone, +totalCart)
+    return res.redirect("/thank-page")
+}
+
+
+export { getProductPage, getAllProductPage, getHomePage, getCartPage, postAddToCartProduct, postDeleteProductInCart , getCheckOut, updateCheckOut, postPlaceOrder , getThankPage }

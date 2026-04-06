@@ -27,6 +27,9 @@ const isEmailExist = async (username: string) => {
 
 const registerNewUser = async (username: string, fullName: string, password: string) => {
     const userRole = await prisma.role.findUnique({where: { name: "USER"}});
+    if (!userRole) {
+        throw new Error("Role not found");
+    }
     const newPassword = await hashPassword(password);
     const newUser = await prisma.user.create({
         data: {
@@ -82,4 +85,20 @@ const getUserSumCart = async (id: string) => {
     })
     return user?.sum ?? 0;
 }
-export { isEmailExist, registerNewUser, userRoles , handleLogin, getUserWithRoleById, getUserSumCart}
+
+const handleGetOrderHistory = async (userId: number) => {
+    const orders = await prisma.order.findMany({
+        where: {
+            userId: userId
+        },
+        include: {
+            orderDetails: {
+                include: {
+                    product: true
+                }
+            }
+        }
+    })
+    return orders
+}
+export { isEmailExist, registerNewUser, userRoles , handleLogin, getUserWithRoleById, getUserSumCart, handleGetOrderHistory}
